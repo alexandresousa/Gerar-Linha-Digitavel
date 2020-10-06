@@ -1,3 +1,43 @@
+
+def somaRecursivo(number):
+    if len(number) == 1:
+        return int(number)
+
+    soma = str(sum([int(char) for char in number]))
+
+    return somaRecursivo(soma)
+
+def proxMultiplo10(number):
+    if number%10 == 0:
+        return number
+
+    number+=1
+    return proxMultiplo10(number)
+
+# Espera receber os campo1, 2 e 3 sem pontos, apenas números.
+def criaDV(digitos):
+
+    multiplicadorPar    = 2
+    multiplicadorImpar  = 1
+    count = 0
+    somador = 0
+
+    for digito in digitos[::-1]:
+
+        if count%2 == 0:
+            resultadoMultiplicacao = str(int(digito)*multiplicadorPar)
+
+            somador += somaRecursivo(resultadoMultiplicacao)
+        else:
+            resultadoMultiplicacao = str(int(digito)*multiplicadorImpar)
+
+            somador += somaRecursivo(resultadoMultiplicacao)
+
+        count +=1
+
+    return str(proxMultiplo10(somador) - somador)
+
+
 def insert_str(string, str_to_insert, index):
   return string[:index] + str_to_insert + string[index:]
 
@@ -18,11 +58,14 @@ def gerar_linha_digitavel(codebar):
   zero			        = codebar[43:44]	# Zero
 
 
-  campo_1 = cod_banco + cod_moeda + campo_livre[0:5] + '0'
+  campo_1 = cod_banco + cod_moeda + campo_livre[0:5]
+  campo_1 += criaDV(campo_1)
 
-  campo_2 = campo_livre[5:15] + '0'
+  campo_2 = campo_livre[5:15]
+  campo_2 += criaDV(campo_2)
 
-  campo_3 = campo_livre[15:25] + '0'
+  campo_3 = campo_livre[15:25]
+  campo_3 += criaDV(campo_3)
 
   campo_4 = dig_verif
 
